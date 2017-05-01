@@ -1,0 +1,3 @@
+>> n=100;alpha=1.05;beta=1.2;
+>> b=betarnd(alpha,beta,n,1);
+>> sum(1/sqrt(2*pi)*exp(-0.5*b.^2)./betapdf(b,alpha,beta))/n
