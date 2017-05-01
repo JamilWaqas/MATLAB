@@ -1,15 +1,12 @@
-function g = grad(funfcn,x)   
-%
-%GRAD Calculates a central difference approximation to the first-order
-%  differential of 'funfcn' with respect to 'x'.
-%  The difference width used is twice 'delta'.
-%  Code due to Ted Catchpole.
-%______________________________________________________________________
-delta = 10^(-6);
-t = length(x);
-g = zeros(t,1);
-Dx = delta*eye(t);			% eye :identity matrix
-for i = 1:t
-  g(i) = (feval(funfcn,x+Dx(i,:)) - feval(funfcn,x-Dx(i,:)))/(2*delta);
+function g = grad(funfcn,x,X1,Xa,Xlam,atype)   
+
+delta = 10^(-6)*ones(1,length(x));   % change this for better accuracy
+Dx = diag(delta);
+
+g = zeros(size(x));
+
+for i = 1:length(x)
+  g(i) = (feval(funfcn,x+Dx(:,i),X1,Xa,Xlam,atype) ...
+        - feval(funfcn,x-Dx(:,i),X1,Xa,Xlam,atype))/(2*delta(i));
 end
-% For information on feval, see Hanselman and Littlefield (1998, p155).
+
